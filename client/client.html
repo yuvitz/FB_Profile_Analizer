@@ -1,0 +1,33 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // let isSignedin = false;
+
+        function analyze() {
+            axios.get("http://127.0.0.1:5000/output").then((response) => {
+                console.log(response.data);
+
+                const formCont = document.getElementById('analyze_container');
+                const dataCont = document.getElementById('result_container');
+                formCont.style.visibility = 'hidden';
+                dataCont.style.visibility = 'visible';
+                // isSignedin = true;
+            }).catch(() => {
+
+            });
+        }
+   
+   </script>
+</head>
+<body onload="analyze();">
+    <div id="analyze_container">
+        <input id="user_name" type="text">
+        <input id="password" type="password">
+        <input id="user_to_scan" type="text">
+        <button type="submit" onclick="analyze()">Analyze</button>
+    </div>
+    <div id="result_container" style="visibility: hidden">
+    </div>
+</body></html>

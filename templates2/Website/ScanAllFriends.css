@@ -1,0 +1,12 @@
+.u-section-1 .u-sheet-1 {min-height: 192px}
+.u-section-1 .u-text-1 {text-transform: uppercase; letter-spacing: 5px; font-weight: 700; width: 655px; margin: 40px auto 0}
+.u-section-1 .u-form-1 {height: 77px; width: 655px; margin: 26px auto 40px} 
+
+@media (max-width: 767px){ .u-section-1 .u-text-1 {width: 540px}
+.u-section-1 .u-form-1 {width: 540px} }
+
+@media (max-width: 575px){ .u-section-1 .u-text-1 {width: 340px}
+.u-section-1 .u-form-1 {width: 340px}
+.u-section-1 .u-form-group-1 {width: 100%}
+.u-section-1 .u-form-group-2 {width: 100%}
+.u-section-1 .u-form-group-3 {width: 100%} }

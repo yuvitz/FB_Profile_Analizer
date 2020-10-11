@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+
+<head>
+    <title>ScanSpecificUser</title>
+
+    <!--==================================   Metadata   ===========================================-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Scan specific User">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <meta property="og:title" content="ScanSpecificUser">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:url" content="index.html">
+    <meta name="generator" content="Nicepage 2.26.5, nicepage.com">
+    <!--========================================================================================-->
+
+    <!--==================================   Links   ===========================================-->
+    <link href="{{ url_for('static',filename='nicepage.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static',filename='ScanSpecificUser.css') }}" rel="stylesheet" media="screen">
+    <script class="u-script" type="text/javascript" src="{{url_for('static', filename='jquery.js')}}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{url_for('static', filename='nicepage.js')}}" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link href="{{ url_for('static',filename='index.html') }}" rel="canonical">
+    <!--========================================================================================-->
+
+    <!--==================================   Scripts   ===========================================-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "name": "",
+            "url": "index.html"
+        }
+    </script>
+
+    <script>
+        function scan() {
+            const emailInput = document.getElementById('email-input').value;
+            const passwordInput = document.getElementById('password-input').value;
+            const userURLInput = document.getElementById('user-url-input').value;
+            print(emailInput);
+
+            /*
+            const url = `http://127.0.0.1:5000/get_scan_result_specific_user/${emailInput}/${passwordInput}}`
+            window.location.href = url;
+            
+            axios.get('/get_scan_result_specific_user', {
+                params: {
+                    email: emailInput,
+                    password: passwordInput
+                }
+            });
+            */
+           
+            axios.post('http://127.0.0.1:5000/example', {
+                    email: emailInput,
+                    password: passwordInput,
+                    user_url: userURLInput
+            })
+            .then(function (response) {
+                response.data.render();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+            /*
+            axios.get(`http://127.0.0.1:5000/get_scan_result_specific_user/${emailInput}/${passwordInput}}`);
+
+            
+            const url = `http://127.0.0.1:5000/output`
+            axios({
+                method: 'post',
+                url: url,
+                data: {
+                    email: emailInput,
+                    password: passwordInput,
+                    user_url: userURLInput
+                }
+            });
+            */
+        }
+    </script>
+    <!--========================================================================================-->
+</head>
+
+<body class="u-body">
+    <section class="u-align-center u-clearfix u-section-1" id="sec-e0b0">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <h2 class="u-text u-text-1">Scan specific User</h2>
+            <div class="u-expanded-width u-form u-form-1">
+                <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form" style="padding: 15px;" source="custom">
+                    <div class="u-form-group u-form-email u-form-group-1">
+                        <label for="email-input" class="u-form-control-hidden u-label">Email</label>
+                        <input type="text" placeholder="Email" id="email-input" name="email" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
+                    </div>
+                    <div class="u-form-password u-form-group u-form-group-2">
+                        <label for="password-input" class="u-form-control-hidden u-label">Password</label>
+                        <input type="password" placeholder="Password" id="password-input" name="password" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
+                    </div>
+                    <div class="u-form-group u-form-group-3">
+                        <label for="user-url-input" class="u-form-control-hidden u-label">User URL</label>
+                        <input type="url" placeholder="User URL" id="user-url-input" name="user-url" class="u-border-1 u-border-grey-30 u-input u-input-rectangle">
+                    </div>
+                    <div class="u-form-group u-form-submit u-form-group-4">
+                        <a href="https://nicepage.com" class="u-btn u-btn-submit u-button-style" onclick="scan();">Scan!</a>
+                        <!-- <input type="submit" value="submit" class="u-form-control-hidden"> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="u-backlink u-clearfix u-grey-80">
+        <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+            <span>Website Templates</span>
+        </a>
+        <p class="u-text">
+            <span>created with</span>
+        </p>
+        <a class="u-link" href="https://nicepage.com/" target="_blank">
+            <span>Website Builder Software</span>
+        </a>.
+    </section>
+</body>
+
+</html>
