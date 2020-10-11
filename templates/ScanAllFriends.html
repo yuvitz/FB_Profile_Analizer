@@ -53,6 +53,24 @@
         });
     }
 </script>
+
+<script>
+  function scan() {
+      const emailInput = document.getElementById('email-input').value;
+      const passwordInput = document.getElementById('password-input').value;
+     
+      axios.post('http://127.0.0.1:5000/scan_result_all_friends', {
+              email: emailInput,
+              password: passwordInput
+      })
+      .then(function (response) {
+          window.document.write(response.data);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+  }
+</script>
 <!--========================================================================================-->
   </head>
 
@@ -71,12 +89,8 @@
               <input type="password" placeholder="Password" id="password-input" name="password" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
             </div>
             <div class="u-form-group u-form-submit u-form-group-3">
-              <a href="https://nicepage.com" class="u-btn u-btn-submit u-button-style" onclick="scan();">Scan!</a>
-              <input type="submit" value="submit" class="u-form-control-hidden">
+              <a class="u-btn u-btn-submit u-button-style" onclick="scan();">Scan!</a>
             </div>
-            <div class="u-form-send-message u-form-send-success">#FormSendSuccess</div>
-            <div class="u-form-send-error u-form-send-message">#FormSendError</div>
-            <input type="hidden" value="" name="recaptchaResponse">
           </form>
         </div>
       </div>

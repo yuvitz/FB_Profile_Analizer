@@ -230,9 +230,7 @@ def scrape_account_age(url):
         today = date.today().strftime("%d/%m/%Y")
         print('today date: ', today)
         age = calculate_age(profile_date, today)
-        print("before")
         settings.driver.get(url)
-        print("after")
         time.sleep(1)
         return age
     except Exception:
@@ -501,7 +499,7 @@ def login(email, password):
 # -----------------------------------------------------------------------------
 
 
-def scraper(email, password, mod, user_url, scrape_mod, **kwargs):
+def scraper(email, password, user_url, mod, scrape_mod, **kwargs):
     print(scrape_mod)
     working_dir = os.path.dirname(os.path.abspath(__file__))
     if mod == Mode.Dev:

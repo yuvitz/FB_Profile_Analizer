@@ -19,12 +19,13 @@ def scrape_and_analyze(email, password, user_url, mod, scrape_mod):
         profile_result = analyze_profile(profile)
         scan_result.append(profile_result)
 
+    print("scan result:", scan_result)
     return scan_result
 
 # gets posts of profile. performs all analysis, and render results
 def analyze_profile(profile):
     posts = profile.posts
-    
+    name = profile.name
     if isinstance(posts, str):
         print(posts)
         return
@@ -36,4 +37,4 @@ def analyze_profile(profile):
         utv_result = UTVAnalysis.analyze_UTV(profile.age, profile.friendship_duration,
                                         profile.total_friends, profile.mutual_friends)
 
-    return ScanResult(offensiveness_result, potentialFakeNews_result, subjects_result, utv_result)
+    return ScanResult(name, offensiveness_result, potentialFakeNews_result, subjects_result, utv_result)

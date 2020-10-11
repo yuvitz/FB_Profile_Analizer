@@ -43,47 +43,18 @@
             const emailInput = document.getElementById('email-input').value;
             const passwordInput = document.getElementById('password-input').value;
             const userURLInput = document.getElementById('user-url-input').value;
-            print(emailInput);
-
-            /*
-            const url = `http://127.0.0.1:5000/get_scan_result_specific_user/${emailInput}/${passwordInput}}`
-            window.location.href = url;
-            
-            axios.get('/get_scan_result_specific_user', {
-                params: {
-                    email: emailInput,
-                    password: passwordInput
-                }
-            });
-            */
            
-            axios.post('http://127.0.0.1:5000/example', {
+            axios.post('http://127.0.0.1:5000/scan_result_specific_user', {
                     email: emailInput,
                     password: passwordInput,
                     user_url: userURLInput
             })
             .then(function (response) {
-                response.data.render();
+                window.document.write(response.data);
             })
             .catch(function (error) {
                 console.log(error);
             });
-
-            /*
-            axios.get(`http://127.0.0.1:5000/get_scan_result_specific_user/${emailInput}/${passwordInput}}`);
-
-            
-            const url = `http://127.0.0.1:5000/output`
-            axios({
-                method: 'post',
-                url: url,
-                data: {
-                    email: emailInput,
-                    password: passwordInput,
-                    user_url: userURLInput
-                }
-            });
-            */
         }
     </script>
     <!--========================================================================================-->
@@ -108,7 +79,7 @@
                         <input type="url" placeholder="User URL" id="user-url-input" name="user-url" class="u-border-1 u-border-grey-30 u-input u-input-rectangle">
                     </div>
                     <div class="u-form-group u-form-submit u-form-group-4">
-                        <a href="https://nicepage.com" class="u-btn u-btn-submit u-button-style" onclick="scan();">Scan!</a>
+                        <a class="u-btn u-btn-submit u-button-style" onclick="scan();">Scan!</a>
                         <!-- <input type="submit" value="submit" class="u-form-control-hidden"> -->
                     </div>
                 </form>
