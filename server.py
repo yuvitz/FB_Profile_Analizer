@@ -1,35 +1,15 @@
 import managerV2
 from scan_result import ScanResult
-from modes import Scrape_mode, Mode
+from analysis_result import AnalysisResult
+from modes import Scrape_mode, Mode, Scan_type
 from flask import Flask, request, render_template, jsonify, make_response 
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# @app.route("/output")
-# def output():
-#	return render_template('scan_result.html', scan_result="Hello World!")
-
 @app.route('/')
 def home():
    return render_template('Homepage.html')
-
-@app.route('/example', methods=['POST'])
-def example():
-	data = request.json
-	print(data)
-	print(request.json)
-	# print(jsonify(data))
-	print(request.json['email'])
-	headers = {'Content-Type': 'text/html'}
-	response = make_response(render_template('SpecificUserResult.html'), 200 ,headers)
-	print (response)
-	return render_template('SpecificUserResult.html',
-							user_name = "A",
-							offensiveness_result = "A",
-							potentialFakeNews_result = "A",
-							subjects_result = "A",
-							utv_result = "A")
 
 @app.route('/scan_specific_user', methods=['GET'])
 def scan_specific_user():
@@ -46,15 +26,10 @@ def get_scan_result_specific_user():
 	user_url = request.json['user_url']
 	mod = Mode.Release							# release mode
 	scrape_mod = Scrape_mode.Scrape_specific  	# scrape specific profile
-	scan_result = managerV2.scrape_and_analyze(email, password, user_url, mod, scrape_mod)[0]
-	# scan_result = ScanResult("yuvi", "a", "b", "c", 1.0)
+	scan_type = Scan_type.full_scan
+	scan_result = managerV2.scrape_and_analyze(email, password, user_url, mod, scrape_mod, scan_type)[0]
 
-	return render_template('ScanSpecificUserResult.html',
-							user_name = scan_result.user_name,
-							offensiveness_result = scan_result.offensiveness_result,
-							potentialFakeNews_result = scan_result.potentialFakeNews_result,
-							subjects_result = scan_result.subjects_result,
-							utv_result = scan_result.utv_result)
+	return create_specific_user_result_template(scan_result)
 
 @app.route("/scan_result_all_friends", methods=['POST'])
 def scan_result_all_friends():
@@ -63,11 +38,25 @@ def scan_result_all_friends():
 	user_url = ""
 	mod = Mode.Release						# release mode
 	scrape_mod = Scrape_mode.Scrape_all  	# scrape all friends
-	scan_results = managerV2.scrape_and_analyze(email, password, user_url, mod, scrape_mod)
-	# scan_results = [ScanResult("yuvi", "a", "b", "c", 1.0), ScanResult("yuvi", "a", "b", "c", 1.0)]
-	
-	return render_template('ScanAllFriendsResult.html',
+	scan_type = Scan_type.quick_scan			# run quick scan
+	scan_results = managerV2.scrape_and_analyze(email, password, user_url, mod, scrape_mod, scan_type)
+	# scan_results = [ ScanResult("Yuvi", "https://www.facebook.com", AnalysisResult(70, "A"), AnalysisResult(70, "A"), AnalysisResult(70, "A"), AnalysisResult(70, "A")) ]
+
+	return render_template('ScanAllFriendsResultV2.html',
 							scan_results = scan_results)
+
+# create html template according to scan result
+def create_specific_user_result_template(scan_result):
+	return render_template('ScanSpecificUserResultV2.html',
+							user_name = scan_result.user_name,
+							offensiveness_result_percent = scan_result.offensiveness_result.percent,
+							offensiveness_result_text = scan_result.offensiveness_result.text,
+							potentialFakeNews_result_percent = scan_result.potentialFakeNews_result.percent,
+							potentialFakeNews_result_text = scan_result.potentialFakeNews_result.text,
+							trigers_result_percent = scan_result.trigers_result.percent,
+							trigers_result_text = scan_result.trigers_result.text,
+							utv_result_percent = scan_result.utv_result.percent,
+							utv_result_text = scan_result.utv_result.text)
 
 if __name__ == "__main__":
 	app.run()

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <title>SpecificUserResult</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="{{ user_name }}">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <meta name="generator" content="Nicepage 2.26.5, nicepage.com">
+
+    <!--==================================   Links   ===========================================-->
+    <link href="{{ url_for('static',filename='nicepage.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static',filename='ScanSpecificUserResult.css') }}" rel="stylesheet" media="screen">
+    <script class="u-script" type="text/javascript" src="{{url_for('static', filename='jquery.js')}}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{url_for('static', filename='nicepage.js')}}" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link href="{{ url_for('static',filename='index.html') }}" rel="canonical">
+    <!--========================================================================================-->
+    
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "",
+        "url": "index.html"
+      }
+    </script>
+    <meta property="og:title" content="SpecificUserResult">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:url" content="index.html">
+  </head>
+  <body class="u-body u-palette-1-light-2">
+    <section class="u-align-center u-clearfix u-section-1" id="sec-3622">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h1 class="u-text u-text-1">{{ user_name }} Scan Result</h1>
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-section-2" id="sec-1d66">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="u-expanded-width u-table u-table-responsive u-table-1">
+          <table class="u-table-entity u-table-entity-1">
+            <colgroup>
+              <col width="33.3%">
+              <col width="33.3%">
+              <col width="33.400000000000006%">
+            </colgroup>
+            <thead class="u-palette-1-base u-table-header u-table-header-1">
+              <tr style="height: 30px;">
+                <th class="u-palette-1-base u-table-cell u-table-cell-1">Analysis Name</th>
+                <th class="u-palette-1-base u-table-cell u-table-cell-2">Percentage Result</th>
+                <th class="u-table-cell">Text Result</th>
+              </tr>
+            </thead>
+            <tbody class="u-table-alt-palette-1-light-3 u-table-body">
+              <tr style="height: 76px;">
+                <td class="u-palette-1-light-3 u-table-cell u-table-cell-4">Offensiveness Analysis</td>
+                <td class="u-palette-1-light-3 u-table-cell u-table-cell-5">{{ offensiveness_result_percent }}</td>
+                <td class="u-palette-1-light-3 u-table-cell u-table-cell-6">{{ offensiveness_result_text }}</td>
+              </tr>
+              <tr style="height: 76px;">
+                <td class="u-palette-1-base u-table-cell u-table-cell-7">Potential Fake News Analysis</td>
+                <td class="u-palette-1-base u-table-cell u-table-cell-8">{{ potentialFakeNews_result_percent }}</td>
+                <td class="u-palette-1-base u-table-cell u-table-cell-9">{{ potentialFakeNews_result_text }}</td>
+              </tr>
+              <tr style="height: 76px;">
+                <td class="u-palette-1-light-3 u-table-cell u-table-cell-10">Triggers Analysis</td>
+                <td class="u-palette-1-light-3 u-table-cell u-table-cell-11">{{ trigers_result_percent }}</td>
+                <td class="u-palette-1-light-3 u-table-cell u-table-cell-12">{{ trigers_result_text }}</td>
+              </tr>
+              <tr style="height: 77px;">
+                <td class="u-palette-1-base u-table-cell u-table-cell-13">Reliability Analysis</td>
+                <td class="u-palette-1-base u-table-cell u-table-cell-14">{{ utv_result_percent }}</td>
+                <td class="u-palette-1-base u-table-cell u-table-cell-15">{{ utv_result_text }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+    <section class="u-backlink u-clearfix u-grey-80">
+      <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+        <span>Website Templates</span>
+      </a>
+      <p class="u-text">
+        <span>created with</span>
+      </p>
+      <a class="u-link" href="https://nicepage.com/" target="_blank">
+        <span>Website Builder Software</span>
+      </a>. 
+    </section>
+  </body>
+</html>

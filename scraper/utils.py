@@ -1,8 +1,9 @@
 import argparse
 import os
 import sys
+import time
 from calendar import calendar
-
+from modes import Scan_type
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -65,7 +66,7 @@ def check_height(driver, selectors, old_height):
 
 
 # dictionary containing (id, posts)
-def my_scroll(number_of_posts, driver, selectors, scroll_time, elements_path):
+def my_scroll(number_of_posts, driver, selectors, scroll_time, elements_path, start, scan_type):
     my_posts = []
     global old_height
 
@@ -85,8 +86,9 @@ def my_scroll(number_of_posts, driver, selectors, scroll_time, elements_path):
             data = remove_comments(data)
             lim = number_of_posts-posts_scraped
             cur_posts_scraped, last_post_id, exps_in_row = my_extract_and_write_posts(data[posts_scraped:], lim, last_post_id, my_posts, exps_in_row)
-            if exps_in_row >= 10:
-                return "Posts Sharer profile"
+            end = time.time()
+            if exps_in_row >= 10 or (scan_type==Scan_type.quick_scan and (end-start > 20)):
+                return my_posts
             posts_scraped += cur_posts_scraped
 
         except TimeoutException:
