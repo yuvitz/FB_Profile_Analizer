@@ -36,7 +36,4 @@ You will need:
 - Run Flask server - Run the `python server.py` command in the project folder.
 - Open your browser on http://127.0.0.1:5000/ and scan your friends!
 
----
-## Progress:
-Currently the program can scrape only profiles, and extract posts.
-"# FB_Profile_analyzer" 
+
