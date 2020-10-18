@@ -33,15 +33,8 @@ You will need:
 
 ### How to Run
 - Add profile urls you'd like to scrape in [input.txt](input.txt)
-- Enter your facebook username and password in [credentials.yaml](credentials.yaml):
-    ```yaml
-    email: your_email
-    password: your_password
-    ```
-  (Dev_mode)
-  OR
-  enter facebook username and password in the Tkinter window after running the program
-- Scrape away! - Run the `python manager.py` command in the project folder.
+- Run Flask server - Run the `python server.py` command in the project folder.
+- Open your browser on http://127.0.0.1:5000/ and scan your friends!
 
 ---
 ## Progress:
