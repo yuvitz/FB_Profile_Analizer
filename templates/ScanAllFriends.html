@@ -18,11 +18,11 @@
     
     <!--==================================   Links   ===========================================-->
     <link href="{{ url_for('static',filename='nicepage.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ url_for('static',filename='ScanAllFriends.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static',filename='ScanPages.css') }}" rel="stylesheet" media="screen">
     <script class="u-script" type="text/javascript" src="{{url_for('static', filename='jquery.js')}}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{{url_for('static', filename='nicepage.js')}}" defer=""></script>
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    <link href="{{ url_for('static',filename='index.html') }}" rel="canonical">
+    <link href="{{ url_for('static',filename='Homepage.html') }}" rel="canonical">
     <!--========================================================================================-->
     
     <!--==================================   Scripts   ===========================================-->
@@ -41,59 +41,62 @@
     function scan() {
         const emailInput = document.getElementById('email-input').value;
         const passwordInput = document.getElementById('password-input').value;
+        // const fullScanCheckbox = document.getElementById('fullscan-checkbox').value;
         
-        const url = `http://127.0.0.1:5000/scan_all_friends/scan`
+        const url = `http://127.0.0.1:5000/scan_result_all_friends`
         axios({
             method: 'post',
             url: url,
             data: {
                 email: emailInput,
                 password: passwordInput
+                // fullScan: fullScanCheckbox
             }
+        })
+        .then(function (response) {
+          window.document.write(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
         });
     }
 </script>
-
-<script>
-  function scan() {
-      const emailInput = document.getElementById('email-input').value;
-      const passwordInput = document.getElementById('password-input').value;
-     
-      axios.post('http://127.0.0.1:5000/scan_result_all_friends', {
-              email: emailInput,
-              password: passwordInput
-      })
-      .then(function (response) {
-          window.document.write(response.data);
-      })
-      .catch(function (error) {
-          console.log(error);
-      });
-  }
-</script>
 <!--========================================================================================-->
   </head>
-
-  <body class="u-body">
-    <section class="u-align-center u-clearfix u-section-1" id="sec-aad2">
+  <body class="u-body u-gradient u-overlap" style="background-image: linear-gradient(200deg, #e0e5eb, #41807c);">
+    <section class="u-clearfix u-section-1" id="sec-e9ec">
+      <div class="u-clearfix u-sheet u-sheet-1"></div>
+    </section>
+    <section class="u-align-center u-clearfix u-section-2" id="sec-aad2">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <h2 class="u-text u-text-1">Scan All friends</h2>
+        <h2 class="u-text u-text-body-alt-color u-text-1">Scan All friends</h2>
         <div class="u-form u-form-1">
-          <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form" style="padding: 15px;" source="custom">
-            <div class="u-form-group u-form-email u-form-group-1">
-              <label for="email-input" class="u-form-control-hidden u-label">Email</label>
-              <input type="text" placeholder="Email" id="email-input" name="email" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
+          <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom">
+            <div class="u-form-group u-form-name u-form-group-1">
+              <label for="email-input" class="u-form-control-hidden u-label u-text-grey-70 u-label-1">Email</label>
+              <input type="email" placeholder="Email" id="email-input" name="email" class="u-border-1 u-border-grey-70 u-input u-input-rectangle u-text-black u-input-1" required="">
             </div>
-            <div class="u-form-password u-form-group u-form-group-2">
-              <label for="password-input" class="u-form-control-hidden u-label">Password</label>
-              <input type="password" placeholder="Password" id="password-input" name="password" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
+            <div class="u-form-email u-form-group u-form-group-2">
+              <label for="password-input" class="u-form-control-hidden u-label u-text-grey-70 u-label-2">Password</label>
+              <input type="password" placeholder="Password" id="password-input" name="password" class="u-border-1 u-border-grey-70 u-input u-input-rectangle u-text-black u-input-2" required="">
             </div>
-            <div class="u-form-group u-form-submit u-form-group-3">
-              <a class="u-btn u-btn-submit u-button-style" onclick="scan();">Scan!</a>
+            <div class="u-form-checkbox u-form-group u-form-group-3">
+              <input type="checkbox" id="fullscan-checkbox" name="checkbox" value="On">
+              <label for="fullscan-checkbox" class="u-label u-text-grey-70 u-label-3">Full Scan</label>
             </div>
+            <div class="u-form-group u-form-submit u-form-group-4">
+              <a class="u-btn u-btn-submit u-button-style u-palette-4-dark-2 u-btn-1" onclick="scan();">Scan!</a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+            </div>
+            <div class="u-form-send-message u-form-send-success">#FormSendSuccess</div>
+            <div class="u-form-send-error u-form-send-message">#FormSendError</div>
+            <input type="hidden" value="" name="recaptchaResponse">
           </form>
         </div>
       </div>
+    </section>
+    <section class="u-clearfix u-section-3" id="sec-a0a5">
+      <div class="u-clearfix u-sheet u-sheet-1"></div>
     </section>
     
     

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html style="font-size: 16px;">
-
-<head>
+  <head>
     <title>ScanSpecificUser</title>
 
     <!--==================================   Metadata   ===========================================-->
@@ -19,11 +18,11 @@
 
     <!--==================================   Links   ===========================================-->
     <link href="{{ url_for('static',filename='nicepage.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ url_for('static',filename='ScanSpecificUser.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static',filename='ScanPages.css') }}" rel="stylesheet" media="screen">
     <script class="u-script" type="text/javascript" src="{{url_for('static', filename='jquery.js')}}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{{url_for('static', filename='nicepage.js')}}" defer=""></script>
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    <link href="{{ url_for('static',filename='index.html') }}" rel="canonical">
+    <link href="{{ url_for('static',filename='Homepage.html') }}" rel="canonical">
     <!--========================================================================================-->
 
     <!--==================================   Scripts   ===========================================-->
@@ -58,48 +57,55 @@
         }
     </script>
     <!--========================================================================================-->
-</head>
-
-<body class="u-body">
-    <section class="u-align-center u-clearfix u-section-1" id="sec-e0b0">
-        <div class="u-clearfix u-sheet u-sheet-1">
-            <h2 class="u-text u-text-1">Scan specific User</h2>
-            <div class="u-expanded-width u-form u-form-1">
-                <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form" style="padding: 15px;" source="custom">
-                    <div class="u-form-group u-form-email u-form-group-1">
-                        <label for="email-input" class="u-form-control-hidden u-label">Email</label>
-                        <input type="text" placeholder="Email" id="email-input" name="email" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
-                    </div>
-                    <div class="u-form-password u-form-group u-form-group-2">
-                        <label for="password-input" class="u-form-control-hidden u-label">Password</label>
-                        <input type="password" placeholder="Password" id="password-input" name="password" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
-                    </div>
-                    <div class="u-form-group u-form-group-3">
-                        <label for="user-url-input" class="u-form-control-hidden u-label">User URL</label>
-                        <input type="url" placeholder="User URL" id="user-url-input" name="user-url" class="u-border-1 u-border-grey-30 u-input u-input-rectangle">
-                    </div>
-                    <div class="u-form-group u-form-submit u-form-group-4">
-                        <a class="u-btn u-btn-submit u-button-style" onclick="scan();">Scan!</a>
-                        <!-- <input type="submit" value="submit" class="u-form-control-hidden"> -->
-                    </div>
-                </form>
+  </head>
+  <body class="u-body u-gradient u-overlap" style="background-image: linear-gradient(200deg, #e0e5eb, #41807c);">
+    <section class="u-clearfix u-section-1" id="sec-6178">
+      <div class="u-clearfix u-sheet u-sheet-1"></div>
+    </section>
+    <section class="u-align-center u-clearfix u-section-2" id="sec-e0b0">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h2 class="u-text u-text-body-alt-color u-text-1">Scan Specific User</h2>
+        <div class="u-form u-form-1">
+          <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom">
+            <div class="u-form-group u-form-name u-form-group-1">
+              <label for="email-input" class="u-form-control-hidden u-label u-label-1">Email</label>
+              <input type="email" placeholder="Email" id="email-input" name="email-1" class="u-border-1 u-border-grey-70 u-input u-input-rectangle u-text-black u-input-1" required="">
             </div>
+            <div class="u-form-email u-form-group u-form-group-2">
+              <label for="password-input" class="u-form-control-hidden u-label u-label-2">Password</label>
+              <input type="password" placeholder="Password" id="password-input" name="password" class="u-border-1 u-border-grey-70 u-input u-input-rectangle u-text-black u-input-2" required="">
+            </div>
+            <div class="u-form-group u-form-group-3">
+              <label for="user-url-input" class="u-form-control-hidden u-label u-label-3">User URL</label>
+              <input type="url" placeholder="User URL" id="user-url-input" name="text" class="u-border-1 u-border-grey-70 u-input u-input-rectangle u-text-black u-input-3">
+            </div>
+            <div class="u-form-group u-form-submit u-form-group-4">
+              <a class="u-btn u-btn-submit u-button-style u-palette-4-dark-2 u-btn-1" onclick="scan();">Scan!</a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+            </div>
+            <div class="u-form-send-message u-form-send-success">#FormSendSuccess</div>
+            <div class="u-form-send-error u-form-send-message">#FormSendError</div>
+            <input type="hidden" value="" name="recaptchaResponse">
+          </form>
         </div>
+      </div>
     </section>
-
-
-
+    <section class="u-clearfix u-section-3" id="sec-3d13">
+      <div class="u-clearfix u-sheet u-sheet-1"></div>
+    </section>
+    
+    
+    
     <section class="u-backlink u-clearfix u-grey-80">
-        <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
-            <span>Website Templates</span>
-        </a>
-        <p class="u-text">
-            <span>created with</span>
-        </p>
-        <a class="u-link" href="https://nicepage.com/" target="_blank">
-            <span>Website Builder Software</span>
-        </a>.
+      <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+        <span>Website Templates</span>
+      </a>
+      <p class="u-text">
+        <span>created with</span>
+      </p>
+      <a class="u-link" href="https://nicepage.com/" target="_blank">
+        <span>Website Builder Software</span>
+      </a>. 
     </section>
-</body>
-
+  </body>
 </html>

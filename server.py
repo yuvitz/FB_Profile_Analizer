@@ -19,6 +19,14 @@ def scan_specific_user():
 def scan_all_friends():
    return render_template('ScanAllFriends.html')
 
+@app.route('/about')
+def about():
+   return render_template('About.html')
+
+@app.route('/contact')
+def contact():
+   return render_template('Contact.html')
+
 @app.route("/scan_result_specific_user", methods=['POST'])
 def get_scan_result_specific_user():
 	email = request.json['email']
@@ -36,10 +44,13 @@ def scan_result_all_friends():
 	email = request.json['email']
 	password = request.json['password']
 	user_url = ""
-	mod = Mode.Release						# release mode
-	scrape_mod = Scrape_mode.Scrape_all  	# scrape all friends
-	scan_type = Scan_type.quick_scan			# run quick scan
-	scan_results = managerV2.scrape_and_analyze(email, password, user_url, mod, scrape_mod, scan_type)
+	mod = Mode.Release							# release mode
+	scrape_mod = Scrape_mode.Scrape_all  		# scrape all friends
+	# should_run_full_scan = request.json['fullScan'] # if true - run full scan
+	# print(should_run_full_scan)
+	should_run_full_scan = Scan_type.quick_scan
+
+	scan_results = managerV2.scrape_and_analyze(email, password, user_url, mod, scrape_mod, should_run_full_scan)
 	# scan_results = [ ScanResult("Yuvi", "https://www.facebook.com", AnalysisResult(70, "A"), AnalysisResult(70, "A"), AnalysisResult(70, "A"), AnalysisResult(70, "A")) ]
 
 	return render_template('ScanAllFriendsResultV2.html',

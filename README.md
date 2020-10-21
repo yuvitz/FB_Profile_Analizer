@@ -1,4 +1,4 @@
-# Projects and having fun
+# Facebook Profile Analyzer
 
 ### Installation
 
@@ -32,18 +32,5 @@ You will need:
 ```
 
 ### How to Run
-- Add profile urls you'd like to scrape in [input.txt](input.txt)
-- Enter your facebook username and password in [credentials.yaml](credentials.yaml):
-    ```yaml
-    email: your_email
-    password: your_password
-    ```
-  (Dev_mode)
-  OR
-  enter facebook username and password in the Tkinter window after running the program
-- Scrape away! - Run the `python manager.py` command in the project folder.
-
----
-## Progress:
-Currently the program can scrape only profiles, and extract posts.
-"# FB_Profile_analyzer" 
+- Run the `python server.py` command in the project folder.
+- Scrape away! - Open your browser at http://127.0.0.1:5000/ and start scraping and analyzing profiles

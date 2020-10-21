@@ -4,6 +4,8 @@ import sys
 import urllib.request
 from datetime import date
 
+from selenium.webdriver import DesiredCapabilities
+
 from modes import Scrape_mode, Mode, Scan_type
 import yaml
 # import utils
@@ -14,7 +16,7 @@ import fb_user
 from . import settings
 from . import utils
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -24,19 +26,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 # returns a dictionary containing the user's posts
 def scrape_posts(url, elements_path, scan_type):
-    # page = []
-    # page.append(url)
-    # page += [url + s for s in section]
-    start = time.time()
-    try:
-        # settings.driver.get(page[0])
-        # print("scrape_posts")
-        settings.driver.get(url)
-        # time.sleep(3)
-        # print("after waiting")
 
-        # my_posts = {key: post_id, value: actual post}
-        my_posts = utils.my_scroll(settings.number_of_posts, settings.driver, settings.selectors, settings.scroll_time, elements_path[0], start, scan_type)
+    try:
+        my_posts = utils.my_scroll(settings.number_of_posts, settings.driver, settings.selectors, settings.scroll_time, elements_path[0], scan_type)
 
     except Exception:
         print(
@@ -151,7 +143,6 @@ def scrape_account_age(url):
     today = date.today().strftime("%d/%m/%Y")
     # print('today date: ', today)
     age = calculate_age(profile_date, today)
-    settings.driver.get(url)
 
     return age
 
@@ -173,7 +164,7 @@ def calculate_duration(friendship_year, friendship_month, today):
     return duration
 
 
-def find_duration(url):
+def find_duration():
 
     # More button click
     WebDriverWait(settings.driver, 10).until(
@@ -201,28 +192,27 @@ def find_duration(url):
     today = date.today().strftime("%d/%m/%Y")
     duration = calculate_duration(year, month, today)
 
-    settings.driver.get(url)
     return duration
 
 
 
 def scrape_data(url, elements_path, scan_type):
     """Given some parameters, this function can scrap friends/photos/videos/about/posts(statuses) of a profile"""
-    if scan_type == Scan_type.full_scan:
-        time.sleep(0.5)
-        try:
+    time.sleep(0.5)
+    try:
+        name = WebDriverWait(settings.driver, 10).until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, '.gmql0nx0.l94mrbxd.p1ri9a11.lzcic4wl.bp9cbjyn.j83agx80'))).text
+        print("name:", name)
+        # name = settings.driver.find_element_by_css_selector(".gmql0nx0.l94mrbxd.p1ri9a11.lzcic4wl.bp9cbjyn.j83agx80").text
+    except Exception:
+        print("find name failed")
+        name = 0
 
-            name = WebDriverWait(settings.driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, '.gmql0nx0.l94mrbxd.p1ri9a11.lzcic4wl.bp9cbjyn.j83agx80'))).text
-            print("name:", name)
-            # name = settings.driver.find_element_by_css_selector(".gmql0nx0.l94mrbxd.p1ri9a11.lzcic4wl.bp9cbjyn.j83agx80").text
-        except Exception:
-            print("find name failed")
-            name = 0
-        # print(name)
-        # # time.sleep(0.5)
+    if scan_type == Scan_type.full_scan:
+
         try:
-            friendship_duration = find_duration(url)
+            friendship_duration = find_duration()
             print("friendship_duration:", friendship_duration)
         except Exception:
             print("find friendship duration failed")
@@ -235,7 +225,10 @@ def scrape_data(url, elements_path, scan_type):
         except Exception:
             print("find age failed")
             age = 0
-        # time.sleep(0.5)
+        settings.driver.get(url)
+        settings.driver.execute_script("window.scrollBy(0, document.body.scrollHeight/3);")
+        time.sleep(0.5)
+
         try:
             friends_data = scrape_friends_count()
             print("friends data:", friends_data)
@@ -248,13 +241,14 @@ def scrape_data(url, elements_path, scan_type):
             print("find friends data failed")
             total_friends = 0
             mutual_friends = 0
-
     else:
-        name = 0
+        settings.driver.execute_script("window.scrollBy(0, document.body.scrollHeight/3);")
+        time.sleep(0.5)
         age = 0
         friendship_duration = 0
         total_friends = 0
         mutual_friends = 0
+
     posts = scrape_posts(url, elements_path, scan_type)
     # posts = []
     profile = fb_user.FBUser(name, url, age, friendship_duration, total_friends, mutual_friends, posts)
@@ -295,16 +289,27 @@ def create_original_link(url):
 
 def scrap_all_friends(scan_type):
     result = []
+    print("scrape all")
     # profile = settings.driver.find_element_by_xpath('./div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div/div[1]/ul/li/div/a/div[1]/div[2]/div/div/div/div/span')
-    settings.driver.find_element_by_css_selector('.gs1a9yip.ow4ym5g4.auili1gw.rq0escxv.j83agx80.cbu4d94t.buofh1pr.g5gj957u.i1fnvgqd.oygrvhab.cxmmr5t8.hcukyx3x.kvgmc6g5.tgvbjcpo.hpfvmrgz.rz4wbd8a.a8nywdso.l9j0dhe7.du4w35lb.rj1gh0hx.pybr56ya.f10w8fjw').click()
+    # profile_xpath = '/html/body/div[1]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div/div[1]/div/div/div[1]/div/div/div[1]/ul/li/div/a/div[1]/div[2]/div'
+
+    # WebDriverWait(settings.driver, 15).until(
+    #     EC.element_to_be_clickable((By.XPATH, profile_xpath))
+    # ).click()
+
+    profile_selector = '.gs1a9yip.ow4ym5g4.auili1gw.rq0escxv.j83agx80.cbu4d94t.buofh1pr.g5gj957u.i1fnvgqd.oygrvhab.cxmmr5t8.hcukyx3x.kvgmc6g5.tgvbjcpo.hpfvmrgz.rz4wbd8a.a8nywdso.l9j0dhe7.du4w35lb.rj1gh0hx.pybr56ya.f10w8fjw'
+    WebDriverWait(settings.driver, 15).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, profile_selector))
+    ).click()
+
+
+    # settings.driver.find_element_by_css_selector('.gs1a9yip.ow4ym5g4.auili1gw.rq0escxv.j83agx80.cbu4d94t.buofh1pr.g5gj957u.i1fnvgqd.oygrvhab.cxmmr5t8.hcukyx3x.kvgmc6g5.tgvbjcpo.hpfvmrgz.rz4wbd8a.a8nywdso.l9j0dhe7.du4w35lb.rj1gh0hx.pybr56ya.f10w8fjw').click()
     time.sleep(0.5)
     url = settings.driver.current_url
     settings.driver.get(url+"/friends")
     time.sleep(0.5)
-    #
-    # friends_count = scrape_friends_count()
-    # print(friends_count)
-    utils.friends_scroll(settings.driver, settings.selectors, settings.scroll_time)
+
+    # utils.friends_scroll(settings.driver, settings.selectors, settings.scroll_time)
     friends_block = settings.driver.find_element_by_css_selector('.dati1w0a.ihqw7lf3.hv4rvrfc.discj3wi')
     friends = friends_block.find_elements_by_css_selector('.oajrlxb2.gs1a9yip.g5ia77u1.mtkw9kbi.tlpljxtp.qensuy8j.ppp5ayq2.goun2846.ccm00jje.s44p3ltw.mk2mc5f4.rt8b4zig.n8ej3o3l.agehan2d.sk4xxmp2.rq0escxv.nhd2j8a9.q9uorilb.mg4g778l.btwxx1t3.pfnyh3mw.p7hjln8o.kvgmc6g5.wkznzc2l.oygrvhab.hcukyx3x.tgvbjcpo.hpfvmrgz.jb3vyjys.rz4wbd8a.qt6c0cv9.a8nywdso.l9j0dhe7.i1ao9s8h.esuyzwwr.f1sip0of.du4w35lb.lzcic4wl.abiwlrkh.p8dawk7l.pioscnbf.etr7akla')
 
@@ -314,21 +319,30 @@ def scrap_all_friends(scan_type):
     list = []
     # Helper: time counter
     start = time.time()
+    end = time.time()
     # DEBUG: control num of iterations
     count = 0
     for link in links:
         count += 1
-        this_start = time.time()
-        settings.driver.get(link)
-        list.append(scrap_profile(scan_type))
-        settings.driver.implicitly_wait(1)
-        time.sleep(1)
-        this_end = time.time()
-        print("this profile took:", this_end-this_start)
+        try:
+            this_start = time.time()
+            settings.driver.get(link)
+            list.append(scrap_profile(scan_type))
+            settings.driver.implicitly_wait(1)
+            time.sleep(1)
+            this_end = time.time()
+            print("this profile took:", this_end-this_start)
+            end = time.time()
+            # print("current profiles average:", (end - start) / count)
+        except WebDriverException:
+            break
+        except Exception:
+            break
+
         # DEBUG: control num of iterations
         if count >= 10:
             break
-    end = time.time()
+
     print("all profiles took:", end - start)
     print("all profiles average:", (end - start)/count)
 
@@ -388,7 +402,7 @@ def login(email, password):
         options.add_argument("--disable-infobars")
         options.add_argument("--mute-audio")
         options.add_argument('--disable-browser-side-navigation')
-        # options.add_argument("--headless")
+        # options.headless = True
 
         try:
             settings.driver = webdriver.Chrome(
@@ -400,6 +414,7 @@ def login(email, password):
 
         fb_path = settings.facebook_https_prefix + settings.facebook_link_body
         settings.driver.get(fb_path)
+
         settings.driver.maximize_window()
 
         # filling the form

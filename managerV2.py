@@ -11,10 +11,10 @@ from functools import partial
 from analyzer import Analyzer
 
 
-def scrape_and_analyze(email, password, user_url, mod, scrape_mod, scan_type):
+def scrape_and_analyze(email, password, user_url, mod, scrape_mod, should_run_full_scan):
     scan_result = []
 
-    users_to_analyze = scraper.main(email, password, user_url, mod, scrape_mod, scan_type)
+    users_to_analyze = scraper.main(email, password, user_url, mod, scrape_mod, should_run_full_scan)
     for fb_user in users_to_analyze:
         print(fb_user.url)
         user_result = Analyzer.analyze_user(fb_user)
