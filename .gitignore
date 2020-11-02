@@ -153,4 +153,6 @@ fabric.properties
 input.txt
 runtime.txt
 credentials.yaml
+scan_result.csv
+
 data/
