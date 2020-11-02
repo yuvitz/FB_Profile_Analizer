@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+  <title>About</title>
+
+    <!--==================================   Metadata   ===========================================-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <meta name="generator" content="Nicepage 2.26.5, nicepage.com">
+    <meta property="og:title" content="About">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:url" content="index.html">
+    <!--========================================================================================-->
+
+    <!--==================================   Links   ===========================================-->
+    <link href="{{ url_for('static',filename='nicepage.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static',filename='ContactAndAbout.css') }}" rel="stylesheet" media="screen">
+    <script class="u-script" type="text/javascript" src="{{url_for('static', filename='jquery.js')}}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{url_for('static', filename='nicepage.js')}}" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link href="{{ url_for('static',filename='index.html') }}" rel="canonical">
+    <!--========================================================================================-->
+
+    <!--==================================   Scripts   ===========================================-->
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "name": "",
+            "url": "index.html"
+        }
+    </script>
+    <!--========================================================================================-->
+  </head>
+  <body class="u-body u-gradient" style="background-image: linear-gradient(200deg, #e0e5eb, #41807c);">
+    <section class="u-clearfix u-section-3" id="sec-c280">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-spacing-vertical u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-40 u-layout-cell-1">
+                <div class="u-container-layout u-valign-bottom u-container-layout-1">
+                  <h2 class="u-text u-text-body-alt-color u-text-1">About The Application</h2>
+                  <p class="u-text u-text-grey-70 u-text-2">General:<br>This application will scan your facebook  friends and find mind-dangering posters! From general offensiveness, to potential fake news, repeating subject and general reliability level.<br>
+                    <br>Options:<br>Scan All Friends:&nbsp;<br>This option will begin a full scan that goes over all your facebook friends, and analyzes them. This scan takes a long time, depending on the amount of facebook friends and the internet connection. This option has two modes - Full Scan and Quick Scan: Full Scan will scan more posts and also calculate UTV(explained below).<br>
+                    <br>Scan Specific User:&nbsp;<br>This option allows you scan a specific facebook user. The application will show you a detailed review of that friend, analyzing them in 4 aspects: offensiveness, fake news, triggers and general reliability.&nbsp;<br>
+                    <h3 class="u-text u-text-body-alt-color u-text-1">Analysis' Explanation:</h3>
+                    Fake news:<br>
+                         This analysis checks the user's posts for over-sentimentality, meaning that if a post is overly positive or overly negitive it will count as potentially fake.
+                    <br>
+                    <br>Offensiveness:<br>
+                          This analysis checks for offensive words, and if the amount of offensive words is above a certain threshold, it marks that post as offensive.
+                    <br>
+                    <br>Triggers:<br>
+                          This analysis checks for triggering words, and if the amount of triggeing words is above a certain threshold, it marks that post as triggeing.
+                    <br>
+                    <br>General Unreliability(UTV - User's Trust Level):<br>
+                          This analysis calculates the user's trust level based on the profiles stats, according to Nadav's article.
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                  </p>
+                </div>
+              </div>
+              <div class="u-container-style u-image u-layout-cell u-right-cell u-size-20 u-image-1">
+                <img alt="" class="u-container-style u-image u-layout-cell u-right-cell u-size-20 u-image-1" data-image-width="1024" data-image-height="683" src="{{url_for('static', filename='images/About.jpeg')}}">
+                <div class="u-container-layout u-container-layout-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-grey-70 u-text-3">This is a Ben Gurion University Computer Sciences project - led by Nadav Voloch, and made by Yuval Itzhak, Yuvi Cohen and Bar Simovich.</p>
+      </div>
+    </section>
+  </body>
+</html>
