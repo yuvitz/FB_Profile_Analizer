@@ -3,9 +3,21 @@ General:
 This application will scan your facebook  friends and find mind-dangering posters! From general offensiveness, to potential fake news, repeating subject and general reliability level. 
 
 Options:
-Scan All Friends: This option will begin a full scan that goes over all your facebook friends, and searches for friends who's posts might be offensive, contain fake information, talk about graphic or triggering subjects, and generally contain offensiveness. This scan takes a long time, depending on the amount of facebook friends and the internet connection. Estimated time: #### averageTimePerProfile * numberOfProfiles #### 
+Scan All Friends: This option will begin a full scan that goes over all your facebook friends, and searches for friends who's posts might be offensive, contain fake information, talk about graphic or triggering subjects, and generally contain offensiveness. This scan takes a long time, depending on the amount of facebook friends and the internet connection. This option has two modes - Full Scan and Quick Scan: Full Scan will scan more posts and also calculate UTV(explained below)
 
-Scan Specific USer: This option allows you to enter a specific friend's facebook page url, and then scan that friend's posts. The application will then show you a detailed review of that friend, analyzing them in 4 aspects: offensiveness, fake news, triggers and general reliability. Estimated time: #### averageTimePerProfile ####
+Scan Specific User: This option allows you to enter a specific friend's facebook page url, and then scan that friend's posts. The application will then show you a detailed review of that friend, analyzing them in 4 aspects: offensiveness, fake news, triggers and general unreliability.
 
+This is a Ben Gurion University Computer Sciences project - led by Nadav Voloch, and made by Yuval Itzhak, Yuvi Cohen and Bar Simovich:
 
-This is a Ben Gurion University Computer Sciences project - led by Nadav Voloch, and made by Yuval Itzhak, Yuvi Cohen and Bar Simovich.
+Analysis' Explanation:
+    Fake news:
+        This analysis checks the user's posts for over-sentimentality, meaning that if a post is overly positive or overly negitive it will count as potentially fake.
+
+    Offensiveness:
+        This analysis checks for offensive words, and if the amount of offensive words is above a certain threshold, it marks that post as offensive.
+
+    Triggers:
+        This analysis checks for triggering words, and if the amount of triggeing words is above a certain threshold, it marks that post as triggeing.
+        
+    General Unreliability(UTV - User's Trust Level):
+        This analysis calculates the user's trust level based on the profiles stats, according to Nadav's article.

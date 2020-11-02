@@ -41,16 +41,16 @@
     function scan() {
         const emailInput = document.getElementById('email-input').value;
         const passwordInput = document.getElementById('password-input').value;
-        // const fullScanCheckbox = document.getElementById('fullscan-checkbox').value;
-        
+        const fullScanCheckbox = document.getElementById('fullscan-checkbox').checked;
+
         const url = `http://127.0.0.1:5000/scan_result_all_friends`
         axios({
             method: 'post',
             url: url,
             data: {
                 email: emailInput,
-                password: passwordInput
-                // fullScan: fullScanCheckbox
+                password: passwordInput,
+                fullScan: fullScanCheckbox
             }
         })
         .then(function (response) {

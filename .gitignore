@@ -150,10 +150,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-# Crawler
 input.txt
 runtime.txt
 credentials.yaml
 data/
-# scraper/__pycache__/
-# ultimate_facebook_scraper.egg-info/SOURCES.txt

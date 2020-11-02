@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html style="font-size: 16px;">
   <head>
-    <title>AllFriendsResult</title>
-
+    <title>ScanAllFriendsResult</title>
+    
+    <!--==================================   Meta   ===========================================-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="keywords" content="{{ user_name }}">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <meta name="generator" content="Nicepage 2.26.5, nicepage.com">
+    <meta property="og:title" content="ScanAllFriendsResult">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:url" content="index.html">
+    <!--========================================================================================-->
 
     <!--==================================   Links   ===========================================-->
     <link href="{{ url_for('static',filename='nicepage.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ url_for('static',filename='SpecificUserResult.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static',filename='ResultPages.css') }}" rel="stylesheet" media="screen">
     <script class="u-script" type="text/javascript" src="{{url_for('static', filename='jquery.js')}}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{{url_for('static', filename='nicepage.js')}}" defer=""></script>
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     <link href="{{ url_for('static',filename='index.html') }}" rel="canonical">
     <!--========================================================================================-->
     
+    <!--==================================   Scripts   ===========================================-->
     <script type="application/ld+json">
       {
         "@context": "http://schema.org",
@@ -27,20 +34,17 @@
         "url": "index.html"
       }
     </script>
-    <meta property="og:title" content="AllFriendsResult">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#478ac9">
-    <meta property="og:url" content="index.html">
+  <!--========================================================================================-->
   </head>
-  <body class="u-body u-palette-1-light-2">
+  <body class="u-body u-gradient u-overlap" style="background-image: linear-gradient(200deg, #f2f2f2, #41807c);"><header class="u-align-left u-clearfix u-header" id="sec-ffa9" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><div class="u-clearfix u-sheet u-sheet-1"></div></header>
     <section class="u-align-center u-clearfix u-section-1" id="sec-3622">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <h1 class="u-text u-text-1">All Friends Scan Result</h1>
+        <h1 class="u-text u-text-body-alt-color u-text-1">Scan Result</h1>
       </div>
     </section>
     <section class="u-align-center u-clearfix u-section-2" id="sec-1d66">
-      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <div class="u-expanded-width u-table u-table-responsive u-table-1">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-table u-table-responsive u-table-1">
           <table class="u-table-entity u-table-entity-1">
             <colgroup>
               <col width="20%">
@@ -50,22 +54,24 @@
               <col width="20%">
             </colgroup>
             <thead class="u-palette-1-base u-table-header u-table-header-1">
-              <tr style="height: 30px;">
-                <th class="u-palette-1-base u-table-cell u-table-cell-1">User Name</th>
-                <th class="u-palette-1-base u-table-cell u-table-cell-2">Offensiveness Analysis</th>
-                <th class="u-palette-1-base u-table-cell u-table-cell-3">Potential Fake News Analysis</th>
-                <th class="u-palette-1-base u-table-cell u-table-cell-4">Triggers Analysis</th>
-                <th class="u-palette-1-base u-table-cell u-table-cell-5">Reliability Analysis</th>
+              <tr style="height: 50px;">
+                <th class="u-palette-4-dark-2 u-table-cell u-table-cell-1">User Name</th>
+                <th class="u-palette-4-dark-2 u-table-cell u-table-cell-2">Offensiveness Analysis</th>
+                <th class="u-palette-4-dark-2 u-table-cell u-table-cell-2">Potential Fake News Analysis</th>
+                <th class="u-palette-4-dark-2 u-table-cell u-table-cell-2">Triggers Analysis</th>
+                <th class="u-palette-4-dark-2 u-table-cell u-table-cell-2">Reliability Analysis</th>
               </tr>
             </thead>
             <tbody class="u-table-alt-palette-1-light-3 u-table-body">
               {%- for scan_result in scan_results %}
-              <tr style="height: 76px;">
-                <td class="u-palette-1-light-3 u-table-cell4">{{ scan_result.user_name }}</td>
-                <td class="u-palette-1-light-3 u-table-cell4">{{ scan_result.offensiveness_result }}</td>
-                <td class="u-palette-1-light-3 u-table-cell4">{{ scan_result.potentialFakeNews_result }}</td>
-                <td class="u-palette-1-light-3 u-table-cell4">{{ scan_result.subjects_result }}</td>
-                <td class="u-palette-1-light-3 u-table-cell4">{{ scan_result.utv_result }}</td>
+              <tr style="height: 88px;">
+                <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-4-dark-2 u-palette-5-light-2 u-table-cell u-table-cell-4">
+                  <a class="u-active-none u-border-none u-btn u-button-style u-hover-none u-none u-text-palette-1-base u-btn-1" href="{{ scan_result.url }}">{{ scan_result.user_name }}</a>
+                </td>
+                <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-4-dark-2 u-palette-5-light-2 u-table-cell u-table-cell-5">{{ scan_result.offensiveness_result.percent }}</td>
+                <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-4-dark-2 u-palette-5-light-2 u-table-cell u-table-cell-6">{{ scan_result.potentialFakeNews_result.percent }}</td>
+                <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-4-dark-2 u-palette-5-light-2 u-table-cell u-table-cell-6">{{ scan_result.trigers_result.percent }}</td>
+                <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-4-dark-2 u-palette-5-light-2 u-table-cell u-table-cell-6">{{ scan_result.utv_result.percent }}</td>
               </tr>
               {%- endfor %}
             </tbody>
@@ -73,6 +79,8 @@
         </div>
       </div>
     </section>
+    
+    
     
     <section class="u-backlink u-clearfix u-grey-80">
       <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
@@ -84,6 +92,9 @@
       <a class="u-link" href="https://nicepage.com/" target="_blank">
         <span>Website Builder Software</span>
       </a>. 
-    </section>
+    </section><span style="height: 64px; width: 64px; margin-left: 0; margin-right: auto; margin-top: 0; background-image: none; right: 20px; bottom: 20px" class="u-back-to-top u-icon u-icon-circle u-opacity u-opacity-85 u-palette-1-base u-spacing-15" data-href="#">
+        <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 551.13 551.13"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-1d98"></use></svg>
+        <svg class="u-svg-content" enable-background="new 0 0 551.13 551.13" viewBox="0 0 551.13 551.13" xmlns="http://www.w3.org/2000/svg" id="svg-1d98"><path d="m275.565 189.451 223.897 223.897h51.668l-275.565-275.565-275.565 275.565h51.668z"></path></svg>
+    </span>
   </body>
 </html>

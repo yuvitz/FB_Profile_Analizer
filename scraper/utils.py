@@ -3,7 +3,7 @@ import os
 import sys
 import time
 from calendar import calendar
-from modes import Scan_type
+from . import modes
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -72,37 +72,34 @@ def my_scroll(number_of_posts, driver, selectors, scroll_time, elements_path, sc
     my_posts = []
     global old_height
     posts_scraped = 0
-    cur_posts_scraped = 0
+    # cur_posts_scraped = 0
     last_post_id = 0
     start = time.time()
-    # old_height = driver.execute_script(selectors.get("height_script"))
-    # driver.execute_script("window.scrollBy(0, document.body.scrollHeight/3);")
     while posts_scraped < number_of_posts:
         try:
-            # WebDriverWait(driver, scroll_time, 0.05).until(
-            #     lambda driver: check_height(driver, selectors, old_height)
-            # )
             data = WebDriverWait(driver, 10).until(
-                EC.presence_of_all_elements_located((By.XPATH, elements_path))
-            )
-            # driver.execute_script(selectors.get("scroll_script"))
-            # data = driver.find_elements_by_xpath(elements_path)
+                EC.presence_of_all_elements_located((By.XPATH, elements_path)))
             driver.execute_script(selectors.get("scroll_script"))
 
             data = remove_comments(data)
             lim = number_of_posts-posts_scraped
+
             cur_posts_scraped, last_post_id, to_stop = my_extract_and_write_posts(data[posts_scraped:], lim, last_post_id, my_posts, start, scan_type)
-            # end = time.time()
-            # if exps_in_row >= 10 or (scan_type==Scan_type.quick_scan and (end-start > 20)):
+
             if to_stop:
                 print("posts took:", time.time() - start, "seconds")
                 return my_posts
-            # old_height = driver.execute_script(selectors.get("height_script"))
-            # posts_scraped += cur_posts_scraped
 
         except TimeoutException:
             print("posts took:", time.time() - start, "seconds")
             return my_posts
+
+        except Exception:
+            print("my_scroll() exception",
+            "Status =",
+            sys.exc_info()[0],)
+            return my_posts
+
     print("posts took:", time.time()-start, "seconds")
     return my_posts
 
@@ -154,7 +151,7 @@ def remove_comments(data):
 
 
 def my_extract_and_write_posts(elements, lim, last_post_id, my_posts, start, scan_type):
-    if scan_type == Scan_type.full_scan:
+    if scan_type == modes.Scan_type.full_scan:
         time_lim = 60
     else:
         time_lim = 30
@@ -171,6 +168,7 @@ def my_extract_and_write_posts(elements, lim, last_post_id, my_posts, start, sca
                 if post_id != None:
                     if int_post_id > last_post_id:
                         status = my_get_status(x)
+                        # print(status)
                         try:
                             if status != "":
                                 my_posts.append(status)
@@ -181,6 +179,7 @@ def my_extract_and_write_posts(elements, lim, last_post_id, my_posts, start, sca
                         except Exception:
                             print("Posts: Could not map encoded characters")
             except Exception:
+                print("passing")
                 pass
     except ValueError:
         print("Exception Value (my_extract_and_write_posts)", "Status =", sys.exc_info()[0])
@@ -206,15 +205,13 @@ def my_get_status(x):
         statuses = post.find_elements_by_xpath('./*[contains(@class, cxmmr5t8)]/div')
         for item in statuses:
             status += item.text
-        exps_in_row = 0
+        # exps_in_row = 0
 
     except Exception:
-
-        #     try:
-        #         status = x.find_element_by_xpath(selectors.get("status_exc")).text
-        #     except Exception:
-        #         pass
-        print("my_get_status exception")
+        pass
+    #     print("my_get_status exception",
+    #         "Status =",
+    #         sys.exc_info()[0],)
     return status
 
 

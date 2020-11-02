@@ -1,7 +1,8 @@
-import managerV2
-from scan_result import ScanResult
-from analysis_result import AnalysisResult
-from modes import Scrape_mode, Mode, Scan_type
+import manager
+from data_contracts.scan_result import ScanResult
+from data_contracts.analysis_result import AnalysisResult
+from scraper import modes
+# from modes import Mode
 from flask import Flask, request, render_template, jsonify, make_response 
 from flask_cors import CORS
 app = Flask(__name__)
@@ -32,10 +33,10 @@ def get_scan_result_specific_user():
 	email = request.json['email']
 	password = request.json['password']
 	user_url = request.json['user_url']
-	mod = Mode.Release							# release mode
-	scrape_mod = Scrape_mode.Scrape_specific  	# scrape specific profile
-	scan_type = Scan_type.full_scan
-	scan_result = managerV2.scrape_and_analyze(email, password, user_url, mod, scrape_mod, scan_type)[0]
+	mod = modes.Mode.Release							# release mode
+	scrape_mod = modes.Scrape_mode.Scrape_specific  	# scrape specific profile
+	scan_type = modes.Scan_type.full_scan
+	scan_result = manager.scrape_and_analyze(email, password, user_url, mod, scrape_mod, scan_type)[0]
 
 	return create_specific_user_result_template(scan_result)
 
@@ -44,21 +45,26 @@ def scan_result_all_friends():
 	email = request.json['email']
 	password = request.json['password']
 	user_url = ""
-	mod = Mode.Release							# release mode
-	scrape_mod = Scrape_mode.Scrape_all  		# scrape all friends
-	# should_run_full_scan = request.json['fullScan'] # if true - run full scan
-	# print(should_run_full_scan)
-	should_run_full_scan = Scan_type.quick_scan
+	mod = modes.Mode.Release							# release mode
+	scrape_mod = modes.Scrape_mode.Scrape_all  			# scrape all friends
+	scan_type = get_scan_type_from_request(request)
 
-	scan_results = managerV2.scrape_and_analyze(email, password, user_url, mod, scrape_mod, should_run_full_scan)
-	# scan_results = [ ScanResult("Yuvi", "https://www.facebook.com", AnalysisResult(70, "A"), AnalysisResult(70, "A"), AnalysisResult(70, "A"), AnalysisResult(70, "A")) ]
+	scan_results = manager.scrape_and_analyze(email, password, user_url, mod, scrape_mod, scan_type)
 
-	return render_template('ScanAllFriendsResultV2.html',
+	return render_template('ScanAllFriendsResult.html',
 							scan_results = scan_results)
+
+def get_scan_type_from_request(request):
+	should_run_full_scan = request.json['fullScan'] # if true - run full scan
+	print(should_run_full_scan)
+	if should_run_full_scan:
+		return modes.Scan_type.full_scan
+	else:
+		return modes.Scan_type.quick_scan
 
 # create html template according to scan result
 def create_specific_user_result_template(scan_result):
-	return render_template('ScanSpecificUserResultV2.html',
+	return render_template('ScanSpecificUserResult.html',
 							user_name = scan_result.user_name,
 							offensiveness_result_percent = scan_result.offensiveness_result.percent,
 							offensiveness_result_text = scan_result.offensiveness_result.text,
