@@ -33,7 +33,7 @@ def scrape_and_analyze(email, password, user_url, mod, scrape_mod, scan_type):
 
 def calculate_analyzes_sum(scan_result):
     offensive = scan_result.offensiveness_result.numeric
-    fakeNews = scan_result.offensiveness_result.numeric
+    fakeNews = scan_result.potentialFakeNews_result.numeric
     trigers = scan_result.trigers_result.numeric
     utv = scan_result.utv_result.numeric
 
@@ -47,8 +47,18 @@ def read_friends_csv():
     with open(path, mode='r', encoding='utf-8') as fb_friends:
         friends_reader = csv.DictReader(fb_friends)
         for friend in friends_reader:
-            age = float(friend['age'])
-            duration = float(friend['friendship_duration'])
+            age = friend['age']
+            # print(age)
+            if '.' in age:
+                age = float(friend['age'])
+            else:
+                age = 0
+            duration = friend['friendship_duration']
+            # print(duration)
+            if '.' in duration:
+                duration = float(friend['friendship_duration'])
+            else:
+                duration = 0
             total_friends = int(friend['total_friends'])
             mutual_friends = int(friend['mutual_friends'])
             friends_list.append(FBUser(friend['name'], friend['url'], age,
@@ -61,8 +71,16 @@ def read_friends_csv():
     return friends_list
 
 
-
-        
-            
+posts = [
+         "עיתון הארץ היטלר עושה רושם טוב טראמפ הוא אויב יותר מהיטלר וסטלין שטראמפ יבחר שוב אני אישית אדאג שכל מי שקשור לעיתון הזה יהיה בארהב פרסונה נון גרטה",
+         "עיתון הארץ היטלר עושה רושם טוב טראמפ הוא אויב יותר מהיטלר וסטלין שטראמפ יבחר שוב אני אישית אדאג שכל מי שקשור לעיתון הזה יהיה בארהב פרסונה נון גרטה",
+         "עיתון הארץ היטלר עושה רושם טוב טראמפ הוא אויב יותר מהיטלר וסטלין שטראמפ יבחר שוב אני אישית אדאג שכל מי שקשור לעיתון הזה יהיה בארהב פרסונה נון גרטה",
+         "עיתון הארץ היטלר עושה רושם טוב טראמפ הוא אויב יותר מהיטלר וסטלין שטראמפ יבחר שוב אני אישית אדאג שכל מי שקשור לעיתון הזה יהיה בארהב פרסונה נון גרטה",
+         "עיתון הארץ היטלר עושה רושם טוב טראמפ הוא אויב יותר מהיטלר וסטלין שטראמפ יבחר שוב אני אישית אדאג שכל מי שקשור לעיתון הזה יהיה בארהב פרסונה נון גרטה",
+         "עיתון הארץ היטלר עושה רושם טוב טראמפ הוא אויב יותר מהיטלר וסטלין שטראמפ יבחר שוב אני אישית אדאג שכל מי שקשור לעיתון הזה יהיה בארהב פרסונה נון גרטה"
+         ]       
+fb_user = FBUser("", "", 1, 1, 1, 1, posts)
+user_result = Analyzer.analyze_user(fb_user)
+print(user_result.potentialFakeNews_result.percent)
 
 

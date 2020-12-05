@@ -58,7 +58,7 @@ def scrape_friends_count():
     settings.driver.execute_script(settings.selectors.get("scroll_script"))
 
     element_text = WebDriverWait(settings.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[1]/div[2]/div/div[3]/div/div/div/div[1]/div/div/div/div[2]/span/span'))
+            EC.presence_of_element_located((By.XPATH, settings.selectors.get("friends_data")))
         ).text
 
     # friends_element = settings.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[1]/div[2]/div/div[3]/div/div/div/div[1]/div/div/div/div[2]/span/span')
@@ -125,13 +125,13 @@ def scrape_account_age(url):
     utils.friends_scroll(settings.driver, settings.selectors, settings.scroll_time)
 
     profile_pictures = WebDriverWait(settings.driver, 10).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, '.g6srhlxm.gq8dxoea.bi6gxh9e.oi9244e8.l9j0dhe7')))
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, settings.selectors.get("profile_pics"))))
 
     last_pic = profile_pictures[len(profile_pictures)-1]
     last_pic.click()
 
     date_element = WebDriverWait(settings.driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, '.oajrlxb2.g5ia77u1.qu0x051f.esr5mh6w.e9989ue4.r7d6kgcz.rq0escxv.nhd2j8a9.nc684nl6.p7hjln8o.kvgmc6g5.cxmmr5t8.oygrvhab.hcukyx3x.jb3vyjys.rz4wbd8a.qt6c0cv9.a8nywdso.i1ao9s8h.esuyzwwr.f1sip0of.lzcic4wl.gmql0nx0.gpro0wi8.b1v8xokw')))
+        EC.presence_of_element_located((By.CSS_SELECTOR, settings.selectors.get("date_element"))))
 
     profile_date = date_element.get_attribute("aria-label")
     if profile_date is None:
@@ -167,16 +167,17 @@ def find_duration():
     # More button click
     WebDriverWait(settings.driver, 10).until(
         EC.element_to_be_clickable((By.XPATH,
-                                        '/html/body/div[1]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div/div/div[3]/div/div/div/div[2]/div/div/div[4]/div'))).click()
+                            settings.selectors.get("more_button")))).click()
     # Friendship click
     WebDriverWait(settings.driver, 10).until(
         EC.element_to_be_clickable((By.XPATH,
-                                    '/html/body/div[1]/div/div[1]/div[1]/div[3]/div/div/div[2]/div/div/div[1]/div[1]/div/div/div[1]/div/div[1]/div/a'))).click()
+                            settings.selectors.get("see_friendship")))).click()
     settings.driver.implicitly_wait(2)
     time.sleep(2)
     common_things = WebDriverWait(settings.driver, 10).until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR,
-                                '.d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.rrkovp55.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.d3f4x2em.fe6kdd0r.mau55g9w.c8b282yb.iv3no6db.jq4qci2q.a3bd9o3v.knj5qynh.oo9gr5id.hzawbc8m')))
+                            settings.selectors.get("common_things"))))
+
     for thing in common_things:
         if "Your friend since" in thing.text:
             duration = thing.text
@@ -200,12 +201,10 @@ def scrape_data(url, elements_path, scan_type):
     try:
         name = WebDriverWait(settings.driver, 10).until(
             EC.presence_of_element_located(
-                (By.CSS_SELECTOR, '.gmql0nx0.l94mrbxd.p1ri9a11.lzcic4wl.bp9cbjyn.j83agx80'))).text
+                (By.CSS_SELECTOR, settings.selectors.get("name")))).text
         print("name:", name)
-        # name = settings.driver.find_element_by_css_selector(".gmql0nx0.l94mrbxd.p1ri9a11.lzcic4wl.bp9cbjyn.j83agx80").text
     except Exception:
         print("find name failed")
-        name = 0
 
     if scan_type == modes.Scan_type.full_scan:
         try:
@@ -287,28 +286,18 @@ def create_original_link(url):
 def scrap_all_friends(scan_type):
     result = []
     print("scrape all")
-    # profile = settings.driver.find_element_by_xpath('./div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div/div[1]/ul/li/div/a/div[1]/div[2]/div/div/div/div/span')
-    # profile_xpath = '/html/body/div[1]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div/div[1]/div/div/div[1]/div/div/div[1]/ul/li/div/a/div[1]/div[2]/div'
-
-    # WebDriverWait(settings.driver, 15).until(
-    #     EC.element_to_be_clickable((By.XPATH, profile_xpath))
-    # ).click()
-
-    profile_selector = '.gs1a9yip.ow4ym5g4.auili1gw.rq0escxv.j83agx80.cbu4d94t.buofh1pr.g5gj957u.i1fnvgqd.oygrvhab.cxmmr5t8.hcukyx3x.kvgmc6g5.tgvbjcpo.hpfvmrgz.rz4wbd8a.a8nywdso.l9j0dhe7.du4w35lb.rj1gh0hx.pybr56ya.f10w8fjw'
     WebDriverWait(settings.driver, 15).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, profile_selector))
+        EC.element_to_be_clickable((By.CSS_SELECTOR, settings.selectors.get("profile_selector")))
     ).click()
 
-
-    # settings.driver.find_element_by_css_selector('.gs1a9yip.ow4ym5g4.auili1gw.rq0escxv.j83agx80.cbu4d94t.buofh1pr.g5gj957u.i1fnvgqd.oygrvhab.cxmmr5t8.hcukyx3x.kvgmc6g5.tgvbjcpo.hpfvmrgz.rz4wbd8a.a8nywdso.l9j0dhe7.du4w35lb.rj1gh0hx.pybr56ya.f10w8fjw').click()
     time.sleep(0.5)
     url = settings.driver.current_url
     settings.driver.get(url+"/friends")
     time.sleep(0.5)
 
-    utils.friends_scroll(settings.driver, settings.selectors, settings.scroll_time)
-    friends_block = settings.driver.find_element_by_css_selector('.dati1w0a.ihqw7lf3.hv4rvrfc.discj3wi')
-    friends = friends_block.find_elements_by_css_selector('.oajrlxb2.gs1a9yip.g5ia77u1.mtkw9kbi.tlpljxtp.qensuy8j.ppp5ayq2.goun2846.ccm00jje.s44p3ltw.mk2mc5f4.rt8b4zig.n8ej3o3l.agehan2d.sk4xxmp2.rq0escxv.nhd2j8a9.q9uorilb.mg4g778l.btwxx1t3.pfnyh3mw.p7hjln8o.kvgmc6g5.wkznzc2l.oygrvhab.hcukyx3x.tgvbjcpo.hpfvmrgz.jb3vyjys.rz4wbd8a.qt6c0cv9.a8nywdso.l9j0dhe7.i1ao9s8h.esuyzwwr.f1sip0of.du4w35lb.lzcic4wl.abiwlrkh.p8dawk7l.pioscnbf.etr7akla')
+    # utils.friends_scroll(settings.driver, settings.selectors, settings.scroll_time)
+    friends_block = settings.driver.find_element_by_css_selector(settings.selectors.get("friends_block"))
+    friends = friends_block.find_elements_by_css_selector(settings.selectors.get("friends"))
 
     links = [friend.get_attribute('href') for friend in friends]
 
@@ -342,8 +331,8 @@ def scrap_all_friends(scan_type):
             break
 
         # DEBUG: control num of iterations
-        # if count >= 1:
-        #     break
+        if count >= 5:
+            break
 
     print("all profiles took (hours):", str(int((end - start)/3600)) +
                   ":" + str(int((end - start)/60) % 60)+":"+str(int((end - start) % 60)))
@@ -463,7 +452,7 @@ def login(email, password):
 
 
 def scraper(email, password, user_url, mod, scrape_mod, scan_type, **kwargs):
-    print(scrape_mod)
+    # print(scrape_mod)
 
     working_dir = os.path.dirname(os.path.abspath(__file__))
     if mod == modes.Mode.Dev:
@@ -477,18 +466,11 @@ def scraper(email, password, user_url, mod, scrape_mod, scan_type, **kwargs):
         email = cfg["email"]
         password = cfg["password"]
 
-    # urls = [
-    #     settings.facebook_https_prefix + settings.facebook_link_body + get_item_id(line)
-    #     for line in open(working_dir + "\input.txt", newline="\r\n")
-    #     if not line.lstrip().startswith("#") and not line.strip() == ""
-    # ]
     login(email, password)
     if scrape_mod == modes.Scrape_mode.Scrape_specific:
-        # url = urls[0]
         settings.driver.get(user_url)
         result = [scrap_profile(scan_type)]
     else:
-        # settings.selectors
         result = scrap_all_friends(scan_type)
     settings.driver.close()
     return result
@@ -500,39 +482,9 @@ def scraper(email, password, user_url, mod, scrape_mod, scan_type, **kwargs):
 
 # if __name__ == "__main__":
 def main(email, password, user_url, mod, scrape_mod, scan_mode):
-    # print(email, password)
+
     settings.ap = argparse.ArgumentParser()
-    # PLS CHECK IF HELP CAN BE BETTER / LESS AMBIGUOUS
-    # settings.ap.add_argument(
-    #     "-dup",
-    #     "--uploaded_photos",
-    #     help="download users' uploaded photos?",
-    #     default=True,
-    # )
-    # settings.ap.add_argument(
-    #     "-dfp",
-    #     "--friends_photos",
-    #     help="download users' photos?",
-    #     default=True
-    # )
-    # settings.ap.add_argument(
-    #     "-fss",
-    #     "--friends_small_size",
-    #     help="Download friends pictures in small size?",
-    #     default=True,
-    # )
-    # settings.ap.add_argument(
-    #     "-pss",
-    #     "--photos_small_size",
-    #     help="Download photos in small size?",
-    #     default=True,
-    # )
-    # settings.ap.add_argument(
-    #     "-ts",
-    #     "--total_scrolls",
-    #     help="How many times should I scroll down?",
-    #     default=2500,
-    # )
+
     settings.ap.add_argument(
         "-st",
         "--scroll_time",
@@ -559,7 +511,6 @@ def main(email, password, user_url, mod, scrape_mod, scan_mode):
         settings.selectors = json.load(selectors)
         settings.params = json.load(params)
 
-    # firefox_profile_path = settings.selectors.get("firefox_profile_path")
     settings.facebook_https_prefix = settings.selectors.get("facebook_https_prefix")
     settings.facebook_link_body = settings.selectors.get("facebook_link_body")
 

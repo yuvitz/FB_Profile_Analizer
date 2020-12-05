@@ -1,6 +1,7 @@
 import csv
 import os
 
+
 def write_results_to_file(scan_results):
     if len(scan_results)==1:
         write_specific_user_result_to_file(scan_results[0])
@@ -33,7 +34,7 @@ def write_specific_user_result_to_file(scan_result):
 def write_all_friends_result_to_file(scan_results):
     path = os.path.dirname(__file__) + '/scan_result.csv'
 
-    with open(path, mode='w') as result_file:
+    with open(path, mode='w', encoding='utf-8') as result_file:
         result_writer = csv.writer(result_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
         # headline
